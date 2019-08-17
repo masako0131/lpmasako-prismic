@@ -39,12 +39,35 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    ['prismic-nuxt', {
-      endpoint: 'https://patissiermasako.cdn.prismic.io/api/v2',
-      linkResolver: function (doc, ctx) {
-        return '/'
+    [
+      'prismic-nuxt', {
+        endpoint: 'https://patissiermasako.cdn.prismic.io/api/v2',
+        linkResolver: function (doc, ctx) {
+          return '/'
+        }
+      },
+    ], [
+      'nuxt-i18n', {
+        defaultLocale: 'zh',
+        locales: [
+          {
+            code: 'ja',
+            iso: 'ja-JP',
+            file: 'ja-JP.js'
+          },
+          {
+            code: 'zh',
+            iso: 'zh-TW',
+            file: 'zh-TW.js'
+          }
+        ],
+        lazy: true,
+        langDir: 'lang/',
+        vueI18n: {
+          fallbackLocale: 'zh',
+        }
       }
-    }]
+    ]
   ],
 
   /*

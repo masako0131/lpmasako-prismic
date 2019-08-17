@@ -8,26 +8,30 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="/index.html" class="navbar-brand">La Pâtisserie Masako</a>
+        <nuxt-link class="navbar-brand" :to="localePath('index', $i18n.locale)">La Pâtisserie Masako</nuxt-link>
       </div>
 
       <nav class="sidebar">
         <div class="navbar-collapse" id="navbar-collapse">
           <div class="site-header hidden-xs">
-            <a class="site-brand" href="/index.html" title>
+            <nuxt-link class="site-brand" :to="localePath('index', $i18n.locale)">
               <img class="img-responsive site-logo" alt src="/assets/logo-w-150.svg" />
               La Pâtisserie Masako
-            </a>
-            <p>神戶·巴黎·台北 - 串起城市記憶的日系法式甜點</p>
+            </nuxt-link>
+            <!-- <a class="site-brand" href="/index.html" title>
+              <img class="img-responsive site-logo" alt src="/assets/logo-w-150.svg" />
+              La Pâtisserie Masako
+            </a>-->
+            <p>{{ $t('slogan') }}</p>
           </div>
           <ul class="nav">
             <li>
-              <a href="/index.html" title>Home</a>
+              <nuxt-link :to="localePath('index', $i18n.locale)">{{ $t('home') }}</nuxt-link>
             </li>
             <li>
-              <a href="/about.html" title>About</a>
+              <a href="/about.html" title>{{ $t('about') }}</a>
             </li>
-            <li>
+            <!-- <li>
               <a href="/services.html" title>Services</a>
             </li>
             <li>
@@ -35,10 +39,15 @@
             </li>
             <li>
               <a href="/components.html" title>Components</a>
-            </li>
+            </li>-->
           </ul>
 
           <nav class="nav-footer">
+            <p>
+              <nuxt-link v-if="$i18n.locale === 'zh'" :to="switchLocalePath('ja')">日本語</nuxt-link>
+              <nuxt-link v-if="$i18n.locale === 'ja'" :to="switchLocalePath('zh')">繁體中文</nuxt-link>
+            </p>
+
             <p class="nav-footer-social-buttons">
               <a class="fa-icon" href="https://www.instagram.com/patissiermasako" title>
                 <i class="fa fa-instagram"></i>
@@ -50,6 +59,7 @@
                 <i class="fa fa-comments"></i>
               </a>
             </p>
+
             <p>
               © Masako H. | Website created with
               <a
@@ -94,8 +104,20 @@ export default {
     //   lang: "ja-jp"
     // });
     // this.data = data;
+    //console.log("44", this.$i18n.locale);
     navbarToggleSidebar();
     navActivePage();
   }
 };
 </script>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+</style>
