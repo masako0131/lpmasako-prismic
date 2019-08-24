@@ -2,7 +2,7 @@
   <div>
     <header class>
       <div class="navbar navbar-default visible-xs">
-        <button type="button" class="navbar-toggle collapsed">
+        <button type="button" class="navbar-toggle collapsed" @click.prevent="sidebar = !sidebar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -11,8 +11,8 @@
         <nuxt-link class="navbar-brand" :to="localePath('index', $i18n.locale)">La Pâtisserie Masako</nuxt-link>
       </div>
 
-      <nav class="sidebar">
-        <div class="navbar-collapse" id="navbar-collapse">
+      <nav class="sidebar" :class="{open:sidebar}">
+        <div class="navbar-collapse" :class="{open:sidebar}" id="navbar-collapse">
           <div class="site-header hidden-xs">
             <nuxt-link class="site-brand" :to="localePath('index', $i18n.locale)">
               <img class="img-responsive site-logo" alt src="/assets/logo-w-150.svg" />
@@ -94,18 +94,23 @@ export default {
       ]
     };
   },
-  // data() {
-  //   return {
-  //     data: {}
-  //   };
-  // },
+  data() {
+    return {
+      sidebar: false
+    };
+  },
+  watch: {
+    $route() {
+      this.sidebar = false;
+    }
+  },
   async mounted() {
     // const { data } = await this.$prismic.api.getSingle("home", {
     //   lang: "ja-jp"
     // });
     // this.data = data;
     //console.log("44", this.$i18n.locale);
-    navbarToggleSidebar();
+    //navbarToggleSidebar();
     navActivePage();
   }
 };
@@ -119,5 +124,10 @@ export default {
 .page-enter,
 .page-leave-active {
   opacity: 0;
+}
+@media (max-width: 767px) {
+  .col-sm-6 {
+    margin-top: 20px;
+  }
 }
 </style>
