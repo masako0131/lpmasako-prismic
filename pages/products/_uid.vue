@@ -95,30 +95,28 @@
 </template>
 
 <script>
+function getPage(prismic, uid, lang) {
+  return prismic.api.getByUID("product", uid, {
+    lang
+  });
+}
+
 export default {
   async asyncData({ app, params }) {
     const lang = app.i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    const document = await app.$prismic.api.getByUID("product", params.uid, {
-      lang
-    });
+    const document = await getPage(app.$prismic, params.uid, lang);
     if (document) {
       return { document };
     } else {
       error({ statusCode: 404, message: "Page not found" });
     }
-    // const lang = app.i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    // const document = await app.$prismic.api.getSingle("home", { lang });
-    // if (document) {
-    //   return { document };
-    // } else {
-    //   error({ statusCode: 404, message: "Page not found" });
-    // }
   },
   components: {},
+  async created() {
+    const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
+    this.document = await getPage(this.$prismic, this.$route.params.uid, lang);
+  },
   async mounted() {
-    // const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    // let document = await this.$prismic.api.getSingle("home", { lang });
-    // console.log("document", document);
     masonryBuild();
   }
 };

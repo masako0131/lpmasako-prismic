@@ -67,28 +67,28 @@
 </template>
 
 <script>
+function getPage(prismic, lang) {
+  return prismic.api.getSingle("about", {
+    lang
+  });
+}
+
 export default {
   async asyncData({ app, params }) {
     const lang = app.i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    const document = await app.$prismic.api.getSingle("about", { lang });
+    const document = await getPage(app.$prismic, lang);
     if (document) {
       return { document };
     } else {
       error({ statusCode: 404, message: "Page not found" });
     }
-    // const lang = app.i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    // const document = await app.$prismic.api.getSingle("home", { lang });
-    // if (document) {
-    //   return { document };
-    // } else {
-    //   error({ statusCode: 404, message: "Page not found" });
-    // }
   },
   components: {},
+  async created() {
+    const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
+    this.document = await getPage(this.$prismic, lang);
+  },
   async mounted() {
-    // const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    // let document = await this.$prismic.api.getSingle("home", { lang });
-    // console.log("document", document);
     masonryBuild();
   }
 };
