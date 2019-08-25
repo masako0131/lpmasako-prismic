@@ -29,7 +29,7 @@
               <nuxt-link :to="localePath('index', $i18n.locale)">{{ $t('home') }}</nuxt-link>
             </li>
             <li>
-              <a href="/about.html" title>{{ $t('about') }}</a>
+              <nuxt-link :to="localePath('about', $i18n.locale)">{{ $t('about') }}</nuxt-link>
             </li>
             <!-- <li>
               <a href="/services.html" title>Services</a>

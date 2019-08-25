@@ -5,34 +5,6 @@
         <h1>{{$prismic.asText(document.data.title)}}</h1>
       </div>
 
-      <div class="row section-container-spacer">
-        <div class="col-xs-12 col-sm-6">
-          <img
-            class="img-responsive"
-            :alt="document.data.main_image.alt"
-            :src="document.data.main_image.url"
-          />
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <div v-html="$prismic.asHtml(document.data.description)"></div>
-          <a
-            v-if="document.data.status === 'selling'"
-            :href="document.data.buylink.url"
-            class="btn btn-primary btn-lg"
-          >前往購買</a>
-          <a
-            v-else-if="document.data.status === 'out_of_stock'"
-            disabled
-            class="btn btn-primary btn-lg"
-          >缺貨中</a>
-          <a
-            v-else-if="document.data.status === 'not_season'"
-            disabled
-            class="btn btn-primary btn-lg"
-          >目前非產季</a>
-        </div>
-      </div>
-
       <div
         class="row section-container-spacer"
         v-for="(slice, index) in document.data.body"
@@ -98,9 +70,7 @@
 export default {
   async asyncData({ app, params }) {
     const lang = app.i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    const document = await app.$prismic.api.getByUID("product", params.uid, {
-      lang
-    });
+    const document = await app.$prismic.api.getSingle("about", { lang });
     if (document) {
       return { document };
     } else {
