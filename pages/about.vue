@@ -80,13 +80,13 @@ export default {
     if (document) {
       return { document };
     } else {
-      error({ statusCode: 404, message: "Page not found" });
+      //error({ statusCode: 404, message: "Page not found" });
     }
   },
   components: {},
   async created() {
-    const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
-    this.document = await getPage(this.$prismic, lang);
+    // const lang = this.$i18n.locale === "ja" ? "ja-jp" : "zh-tw";
+    // this.document = await getPage(this.$prismic, lang);
   },
   async mounted() {
     masonryBuild();
